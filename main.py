@@ -207,10 +207,11 @@ def send_message(to_user, access_token, region_name, weather, temp, wind_dir, no
     now_time = datetime.now().strftime("%Y-%m-%d")
     now_time_year = datetime.now().strftime("%Y")
     now_time_month = datetime.now().strftime("%m")
-    print(now_time_year, now_time_month)
+    #print(now_time_year, now_time_month)
+    # 当前年份大于2022 表示为跨年 基数+12 再看月份差值
     if int(now_time_year) > aunt_year:
-        print(1)
-    # 当前年份不大与2022 表示为当前年份 只看月份差值
+        dis_month = int(now_time_month)+12 - aunt_month
+    # 当前年份不大与于2022 表示为当前年份 只看月份差值
     else:
         dis_month = int(now_time_month) - aunt_month
         print(dis_month)
@@ -221,7 +222,7 @@ def send_message(to_user, access_token, region_name, weather, temp, wind_dir, no
     # 七天内判断
     if 0 < aunt_7date.days < 7:
         # aunt_data_message = "距离下一次亲戚来临还有{}天哟".format(aunt_7date.days)
-        aunt_data_message = "宝贝,月经可能会在{}天内来,要注意休息哟~\n\n❤预测会是{}".format((aunt_7date.days)+2, aunt_28date)
+        aunt_data_message = "❤宝贝,月经可能会在{}天内来,要注意休息哟~❤\n\n❤预测会是{}❤".format(aunt_7date.days + 2, aunt_28date)
         data["data"]["aunt_data"] = {"value": aunt_data_message, "color": get_color()}
     #
     headers = {
@@ -245,7 +246,6 @@ def send_message(to_user, access_token, region_name, weather, temp, wind_dir, no
 
 if __name__ == "__main__":
     try:
-
         with open("config.txt", encoding="utf-8") as f:
             config = eval(f.read())
     except FileNotFoundError:
