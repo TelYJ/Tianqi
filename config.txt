@@ -5,7 +5,7 @@
 # 公众号appSecret
 "app_secret": "8e655a005c11fec636bc0ed8786e129e",
 # 模板消息id
-"template_id": "UNRA5LuarCMhauYROmSP1MNjHu7vrPjwfNA2p3Tp_4I",
+"template_id": "JyfyAzLQ2B-bkS5tZrDEbMQlbmcR5PgKjgmzMCc-xFo",
 # 接收公众号消息的微信号，如果有多个，需要在[]里用英文逗号间隔，例如["wx1", "wx2"]
 "user": ["oiq8L67Mh_wjTaYhK6xq8XmajVjk","oiq8L617RZnNpJettPdJ2TK0mHC0"],
  
@@ -15,7 +15,7 @@
 # 所在地区，可为省，城市，区，县，同时支持国外城市，例如伦敦
 "region": "重庆市",
 # 生日1，修改名字为对应需要显示的名字，如果生日为农历，在最前面加上r即可
-"birthday1": {"name": "张张老师", "birthday": "r1998-10-25"},
+"birthday1": {"name": "张baby", "birthday": "r1998-10-25"},
 # 姨妈Begin
 "aunt_data": "2022-09-18",
 # 在一起的日子，格式同上，暂不不支持农历
