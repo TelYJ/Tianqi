@@ -189,7 +189,7 @@ def send_message(to_user, access_token, region_name, weather, temp, wind_dir, no
         # 获取距离下次生日的时间
         birth_day = get_birthday(value["birthday"], year, today)
         if birth_day == 0:
-            birthday_data = "今天{}生日哦，祝{}生日快乐！".format(value["name"], value["name"])
+            birthday_data = "今天是我们{}的生日哦，祝{}生日快乐~快乐成长~".format(value["name"], value["name"])
         else:
             birthday_data = "距离{}的生日还有{}天".format(value["name"], birth_day)
         # 将生日数据插入data
@@ -213,8 +213,10 @@ def send_message(to_user, access_token, region_name, weather, temp, wind_dir, no
         dis_month = int(now_time_month)+12 - aunt_month
     # 当前年份不大与于2022 表示为当前年份 只看月份差值
     else:
-        dis_month = int(now_time_month) - aunt_month
-        print(dis_month)
+        if int(now_time_month) == aunt_month:
+            dis_month = 1
+        else:
+            dis_month = int(now_time_month) - aunt_month
     # 时间赋值
     aunt_28date = (datetime.combine(aunt_date, time()) + timedelta(days=28 * dis_month)).strftime("%Y-%m-%d")
     aunt_7date = datetime.strptime(aunt_28date, '%Y-%m-%d') - datetime.now()
@@ -222,7 +224,11 @@ def send_message(to_user, access_token, region_name, weather, temp, wind_dir, no
     # 七天内判断
     if 0 <= aunt_7date.days < 7:
         # aunt_data_message = "距离下一次亲戚来临还有{}天哟".format(aunt_7date.days)
-        aunt_data_message = "❤宝贝,月经可能会在{}天内来,要注意休息哟~❤\n\n❤预测会是{}❤".format(aunt_7date.days + 2, aunt_28date)
+        aunt_data_message = "❤宝贝,月经可能会在{}天内来,要注意休息哟~\n\n❤预测会是{}❤".format(aunt_7date.days + 2, aunt_28date)
+        data["data"]["aunt_data"] = {"value": aunt_data_message, "color": get_color()}
+    else:
+        # aunt_data_message = "距离下一次亲戚来临还有{}天哟".format(aunt_7date.days)
+        aunt_data_message = "❤宝贝,下次月经可能会在{}天内来,可吃可喝可多想我~❤\n\n❤预测会是{}❤".format(aunt_7date.days + 2, aunt_28date)
         data["data"]["aunt_data"] = {"value": aunt_data_message, "color": get_color()}
     #
     headers = {
