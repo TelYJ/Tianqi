@@ -208,6 +208,7 @@ def send_message(to_user, access_token, region_name, weather, temp, wind_dir, no
     now_time_year = datetime.now().strftime("%Y")
     now_time_month = datetime.now().strftime("%m")
     #print(now_time_year, now_time_month)
+    #print(now_time_month,aunt_month,now_time)
     # 当前年份大于2022 表示为跨年 基数+12 再看月份差值
     if int(now_time_year) > aunt_year:
         dis_month = int(now_time_month)+12 - aunt_month
@@ -217,18 +218,23 @@ def send_message(to_user, access_token, region_name, weather, temp, wind_dir, no
             dis_month = 1
         else:
             dis_month = int(now_time_month) - aunt_month
+            aunt_28date = (datetime.combine(aunt_date, time()) + timedelta(days=26 * dis_month)).strftime("%Y-%m-%d")
+            if aunt_28date < now_time:
+                dis_month = int(now_time_month)+1 - aunt_month
     # 时间赋值
-    aunt_28date = (datetime.combine(aunt_date, time()) + timedelta(days=28 * dis_month)).strftime("%Y-%m-%d")
+    #print(dis_month)
+    aunt_28date = (datetime.combine(aunt_date, time()) + timedelta(days=26 * dis_month)).strftime("%Y-%m-%d")
     aunt_7date = datetime.strptime(aunt_28date, '%Y-%m-%d') - datetime.now()
     print(aunt_7date.days, aunt_28date)
     # 七天内判断
     if 0 <= aunt_7date.days < 7:
-        # aunt_data_message = "距离下一次亲戚来临还有{}天哟".format(aunt_7date.days)
         aunt_data_message = "❤宝贝,月经可能会在{}天内来,要注意休息哟~\n\n❤预测会是{}❤".format(aunt_7date.days + 2, aunt_28date)
         data["data"]["aunt_data"] = {"value": aunt_data_message, "color": get_color()}
-    else:
-        # aunt_data_message = "距离下一次亲戚来临还有{}天哟".format(aunt_7date.days)
+    elif aunt_7date.days > 7:
         aunt_data_message = "❤宝贝,下次月经可能会在{}天内来,可吃可喝可多想我~❤\n\n❤预测会是{}❤".format(aunt_7date.days + 2, aunt_28date)
+        data["data"]["aunt_data"] = {"value": aunt_data_message, "color": get_color()}
+    else:
+        aunt_data_message = "❤宝贝,辛苦,不怕有老公在~❤".format(aunt_7date.days + 2, aunt_28date)
         data["data"]["aunt_data"] = {"value": aunt_data_message, "color": get_color()}
     #
     headers = {
